@@ -3,6 +3,8 @@
 A small native Windows app for turning page-based Flash documents into PDFs.
 Built because old course solution sheets should not require an old Flash player.
 
+VIBECODED!
+
 ## Use it
 
 1. Extract the Windows package into a folder.
