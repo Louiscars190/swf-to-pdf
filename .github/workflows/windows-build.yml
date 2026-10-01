@@ -1,0 +1,34 @@
+name: Windows build
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MinGW-w64
+        uses: msys2/setup-msys2@v2
+        with:
+          location: ${{ runner.temp }}\msys64
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-gcc
+      - name: Build native executable
+        shell: pwsh
+        run: |
+          $env:PATH = "$env:RUNNER_TEMP\msys64\mingw64\bin;$env:PATH"
+          .\scripts\build.ps1
+      - name: Package app and renderer
+        shell: pwsh
+        run: .\scripts\package.ps1
+      - name: Upload Windows package
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWF-to-PDF-Native-Windows
+          path: dist/SWF-to-PDF-Native-Windows.zip
+          if-no-files-found: error

@@ -1,0 +1,10 @@
+/build/
+/dist/
+*.o
+*.exe
+*.dll
+*.swf
+*.php
+*.pdf
+/runtime/
+/engine/
